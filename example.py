@@ -67,6 +67,6 @@ while not done:
 
     pygame.draw.rect(w1.screen,[255,255,255],[p1.x,p1.y,p1.w,p1.h])
 
-    pygame.display.update()
+    pygame.display.flip()
 
 pygame.quit()
