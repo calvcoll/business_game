@@ -8,3 +8,9 @@ class Timer_Test(unittest.TestCase):
     self.assertEqual(t.isFinished(), False)
     time.sleep(1)
     self.assertEqual(t.isFinished(), True)
+
+  def id(self):
+    return 'Timer testing'
+
+  def shortDescription(self):
+    return 'Test timer'
