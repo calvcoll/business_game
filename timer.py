@@ -1,10 +1,11 @@
-import pygame.time
+import time
 
-class Timer():
-  def __init__(seconds):
-    this.initialTime = pygame.time.get_time()
-    this.time_to_wait = this.initialTime + (seconds * 60)
+class Timer:
+  def __init__(self, seconds):
+    self.initialTime = int(round(time.time()))
+    self.time_to_wait = self.initialTime + seconds
 
-  def isFinished():
-    if (this.initialTime - this.time_to_wait > 0) return False
-    else return True
+  def isFinished(self):
+    if (self.time_to_wait - int(round(time.time()))> 0):
+      return False
+    return True
