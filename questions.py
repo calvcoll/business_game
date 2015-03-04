@@ -1,3 +1,5 @@
+import random
+
 class Question:
   def __init__(self, question_dict):
     self.title = question_dict['title']
@@ -27,3 +29,35 @@ class QuestionImporter:
                 'a2' : question[3], 'a3' : question[4],
                 'a4' : question[5]}))
     return questions
+
+  def new_seed():
+    seed = 0
+    try:
+      seed_file = open('SEED','r')
+      seed_file.close()
+    except FileNotFoundError:
+      seed_file = open('SEED','w')
+      seed_file.write(str(seed))
+      seed_file.close()
+    seed_file = open('SEED','r') #open
+    read_seed = seed_file.read()
+    seed_file.close()
+    seed_file = open('SEED','w') #close
+    seed = int(read_seed.rstrip())+1 #get seed
+    seed_file.write(str(seed))#save seed
+    seed_file.close()
+    return seed
+
+  def import_random_questions(amount=15):
+    questions = import_questions()
+    q_list = []
+    seed = new_seed()
+    for i in amount:
+      num = random.randint(0,len(questions))
+      while num in q_list:
+        num = random.randint(0,len(questions))
+      q_list.append(num)
+    questions_returned = []
+    for num in q_list:
+      questions_returned.append(questions[num])
+    return questions_returned

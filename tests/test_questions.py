@@ -27,3 +27,15 @@ class TestQuestionImporter(unittest.TestCase):
 
   def shortDescription(self):
     return 'Test the importer'
+
+class TestSeed(unittest.TestCase):
+  def test_importer(self):
+    seed1 = questions.QuestionImporter.new_seed()
+    seed2 = questions.QuestionImporter.new_seed()
+    self.assertNotEqual(seed1,seed2)
+
+  def id(self):
+    return 'Seed gen/save test'
+
+  def shortDescription(self):
+    return 'Test the seed code'
