@@ -17,7 +17,7 @@ class TestQuestions(unittest.TestCase):
 class TestQuestionImporter(unittest.TestCase):
   def test_importer(self):
     question = questions.Question({'title' : 't', 'answer' : 'a','a1' : 'a1', 'a2' : 'a2', 'a3' : 'a3', 'a4' : 'a4'})
-    iquestion = questions.QuestionImporter.import_questions('tests/test_questions.csv')[0]
+    iquestion = questions.QuestionImporter().import_questions('tests/test_questions.csv')[0]
     self.assertEqual(iquestion.get_title(), question.get_title())
     self.assertEqual(iquestion.get_answers(), question.get_answers())
     self.assertEqual(iquestion.get_correct_answer(), question.get_correct_answer())
@@ -30,8 +30,8 @@ class TestQuestionImporter(unittest.TestCase):
 
 class TestSeed(unittest.TestCase):
   def test_importer(self):
-    seed1 = questions.QuestionImporter.new_seed()
-    seed2 = questions.QuestionImporter.new_seed()
+    seed1 = questions.QuestionImporter().new_seed()
+    seed2 = questions.QuestionImporter().new_seed()
     self.assertNotEqual(seed1,seed2)
 
   def id(self):
