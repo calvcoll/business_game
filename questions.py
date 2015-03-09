@@ -18,7 +18,7 @@ class Question:
   def get_correct_answer(self):
     return self.answer
 
-import csv,os.path
+import csv,os.path,time
 class QuestionImporter:
   def import_questions(self, file='questions.csv'):
     reader = csv.reader(open(file), delimiter='|')
@@ -31,29 +31,16 @@ class QuestionImporter:
     return questions
 
   def new_seed(self):
-    seed = 0
-    if not os.path.isfile('SEED'):
-      seed_file = open('SEED','w')
-      print(str(seed))
-      seed_file.write(str(seed))
-      seed_file.close()
-    seed_file = open('SEED','r') #open
-    read_seed = seed_file.read()
-    seed_file.close()
-    seed_file = open('SEED','w') #close
-    seed = int(read_seed.rstrip())+1 #get seed
-    seed_file.write(str(seed))#save seed
-    seed_file.close()
-    return seed
+    return int(round(time.time() * 1000))
 
   def import_random_questions(self, amount=15):
-    questions = import_questions()
+    questions = self.import_questions()
     q_list = []
-    seed = new_seed()
-    for i in amount:
-      num = random.randint(0,len(questions))
+    seed = self.new_seed()
+    for i in range(amount):
+      num = random.randint(0,len(questions)-1)
       while num in q_list:
-        num = random.randint(0,len(questions))
+        num = random.randint(0,len(questions)-1)
       q_list.append(num)
     questions_returned = []
     for num in q_list:
