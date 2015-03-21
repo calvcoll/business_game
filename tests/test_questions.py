@@ -1,5 +1,6 @@
 import unittest
 import questions
+import time
 
 class TestQuestions(unittest.TestCase):
   def test_questions(self):
@@ -31,6 +32,7 @@ class TestQuestionImporter(unittest.TestCase):
 class TestSeed(unittest.TestCase):
   def test_importer(self):
     seed1 = questions.QuestionImporter().new_seed()
+    time.sleep(0.001)
     seed2 = questions.QuestionImporter().new_seed()
     self.assertNotEqual(seed1,seed2)
 
