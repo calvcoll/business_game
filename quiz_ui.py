@@ -43,17 +43,20 @@ class TextBox:
             screen.blit(text, (self.x + self.margin, self.y + self.margin))
 
 class OptionButton:
-    def __init__(self,x,y,label,text,correct,objId):
+    def __init__(self,x,y,label,text,objId,q):
         self.x = x
         self.y = y
         self.w = 250
         self.h = 50
         self.label = label
         self.text = text
-        self.correct = correct
         self.objId = objId
         self.colour = colour_btn1
         self.visible = True
+        if label[0].lower() == qList[q].get_correct_answer():
+            self.correct = True
+        else:
+            self.correct = False
 
     def isClicked(self):
         if pygame.mouse.get_pos()[0] > self.x and pygame.mouse.get_pos()[0] < self.x + self.w and pygame.mouse.get_pos()[1] > self.y and pygame.mouse.get_pos()[1] < self.y + self.h:
@@ -130,6 +133,16 @@ def reset():
     global answered
     answered = False
 
+    qi = questions.QuestionImporter()
+    
+    global qList
+    #not working
+    #qList = qi.import_random_questions(1)
+    qList = [questions.Question({'title' : "question?",
+                'answer' : "b", 'a1' : "incorrect",
+                'a2' : "correct", 'a3' : "incorrect",
+                'a4' : "incorrect"})]
+
 def getRenderObject(objectId):
     for obj in renderQueue:
         if obj.objId == objectId:
@@ -157,14 +170,15 @@ while not done:
             for button in renderQueue:
                 if button.isClicked():
                     if button.objId == "quit":
-                        renderQueue = []
+                        #renderQueue = []
                         done = True
                     if button.objId == "play":
+                        q = 0
                         options = [
-                            OptionButton(50,300,"A)","Option 1",False,"opt1"),
-                            OptionButton(50,375,"B)","Option 2",True,"opt2"),
-                            OptionButton(350,300,"C)","Option 3",False,"opt3"),
-                            OptionButton(350,375,"D)","Option 4",False,"opt4")
+                            OptionButton(50,300,"A)",qList[q].get_answers()[0],"opt1",q),
+                            OptionButton(50,375,"B)",qList[q].get_answers()[1],"opt2",q),
+                            OptionButton(350,300,"C)",qList[q].get_answers()[2],"opt3",q),
+                            OptionButton(350,375,"D)",qList[q].get_answers()[3],"opt4",q)
                         ]
                         buttons = [
                             TextBox(25,0,75,50,colour_btn1,"Quit",colour_btn2,font2,True,"quit"),
@@ -173,7 +187,7 @@ while not done:
                         ]
                         textBoxes = [
                             TextBox(475,0,150,50,colour_btn1,"Score: 0",colour_btn2,font2,False,"score"),
-                            TextBox(25,75,600,125,colour_bg,"Example question?",colour_btn1,font2,False,"questionText"),
+                            TextBox(25,75,600,125,colour_bg,qList[q].get_title(),colour_btn1,font2,False,"questionText"),
                             TextBox(425,225,100,50,colour_btn1,"10",colour_btn2,font2,True,"timer")
                         ]
                         renderQueue = getRenderQueue()
