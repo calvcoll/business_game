@@ -36,7 +36,7 @@ class QuestionImporter:
   def import_random_questions(self, amount=15):
     questions = self.import_questions()
     q_list = []
-    seed = self.new_seed()
+    random.seed(self.new_seed())
     for i in range(amount):
       num = random.randint(0,len(questions)-1)
       while num in q_list:
