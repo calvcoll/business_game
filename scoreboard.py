@@ -1,8 +1,14 @@
+from __future__ import print_function
+
 class ScoreBoard:
 
     def __init__(self):
 
         self.scoreBoard = []
+
+    def getTopTen(self):
+        sorted(self.scoreBoard, key = lambda x: int(x[1]))
+        return self.scoreBoard[0:10]
 
     def loadScoreBoard(self):
 
