@@ -35,6 +35,8 @@ class QuestionImporter:
 
   def import_random_questions(self, amount=15):
     questions = self.import_questions()
+    if len(questions) < amount:
+        amount = len(questions)
     q_list = []
     random.seed(self.new_seed())
     for i in range(amount):
