@@ -119,7 +119,7 @@ def reset():
         TextBox(405,295,150,45,colour_btn2,"High Scores",colour_btn1,font3,True,"highscores"),
         TextBox(250,365,150,45,colour_btn2,"Exit",colour_btn1,font3,True,"quit")
     ]
-    
+
     textBoxes = [
         TextBox(125,100,400,54,colour_btn1,"The Quiz of Quizicalness",colour_btn2,font1,True,"title"),
     ]
@@ -134,7 +134,7 @@ def reset():
     answered = False
 
     qi = questions.QuestionImporter()
-    
+
     global qList
     #not working
     #qList = qi.import_random_questions(1)
@@ -152,7 +152,7 @@ reset()
 
 while not done:
     screen.fill(colour_bg)
-    
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             done = True
@@ -209,7 +209,7 @@ while not done:
                     if button.objId == "score":
                         reset()
                     ###///////////###
-    
+
     for button in renderQueue:
         if button.visible:
             button.render()
