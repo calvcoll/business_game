@@ -69,6 +69,32 @@ class OptionButton:
         TextBox(self.x,self.y,self.h,self.h,colour_btn2,self.label,colour_btn1,font2,False,"").render()
         TextBox(self.x+self.h,self.y,self.w-self.h,self.h,self.colour,self.text,colour_btn2,font2,False,"").render()
 
+class ScoreBoard:
+    def __init__(self,x,y,columnWidth1,columnWidth2,rowHeight,padding,font,fontColour,boxColour,scoreList,objId):
+        self.x = x
+        self.y = y
+        self.cw1 = columnWidth1
+        self.cw2 = columnWidth2
+        self.rh = rowHeight
+        self.pad = padding
+        self.font = font
+        self.fontColour = fontColour
+        self.boxColour = boxColour
+        self.scoreList = scoreList
+        self.objId = objId
+        self.visible = True
+        self.names = [TextBox(self.x,self.y + x*self.rh + x*padding,self.cw1,self.rh,colour_btn1,self.scoreList[x][0],colour_bg,font2,False,"") for x in range(len(scoreList))]
+        self.scores = [TextBox(self.x + self.cw1 + padding,self.y + x*self.rh + x*padding,self.cw2,self.rh,colour_btn1,str(self.scoreList[x][1]),colour_bg,font2,False,"") for x in range(len(scoreList))]
+
+    def isClicked(self):
+        pass
+
+    def render(self):
+        for name in self.names:
+            name.render()
+        for score in self.scores:
+            score.render()
+
 def getRenderQueue():
     rq = []
     for obj in options:
@@ -119,7 +145,7 @@ def reset():
         TextBox(405,295,150,45,colour_btn2,"High Scores",colour_btn1,font3,True,"highscores"),
         TextBox(250,365,150,45,colour_btn2,"Exit",colour_btn1,font3,True,"quit")
     ]
-
+    
     textBoxes = [
         TextBox(125,100,400,54,colour_btn1,"The Quiz of Quizicalness",colour_btn2,font1,True,"title"),
     ]
@@ -134,14 +160,42 @@ def reset():
     answered = False
 
     qi = questions.QuestionImporter()
-
+    
     global qList
     #not working
     #qList = qi.import_random_questions(1)
-    qList = [questions.Question({'title' : "question?",
-                'answer' : "b", 'a1' : "incorrect",
-                'a2' : "correct", 'a3' : "incorrect",
-                'a4' : "incorrect"})]
+    qList = [
+        questions.Question({'title' : "question 1?",
+            'answer' : "b", 'a1' : "incorrect",
+            'a2' : "correct", 'a3' : "incorrect",
+            'a4' : "incorrect"}),
+         questions.Question({'title' : "question 2?",
+            'answer' : "d", 'a1' : "incorrect",
+            'a2' : "incorrect", 'a3' : "incorrect",
+            'a4' : "correct"}),
+         questions.Question({'title' : "question 3?",
+            'answer' : "a", 'a1' : "correct",
+            'a2' : "incorrect", 'a3' : "incorrect",
+            'a4' : "incorrect"}),
+         questions.Question({'title' : "question 4?",
+            'answer' : "b", 'a1' : "incorrect",
+            'a2' : "correct", 'a3' : "incorrect",
+            'a4' : "incorrect"}),
+         questions.Question({'title' : "question 5?",
+            'answer' : "c", 'a1' : "incorrect",
+            'a2' : "incorrect", 'a3' : "correct",
+            'a4' : "incorrect"})
+    ]
+
+    global scores
+    scores = [
+        ["player 1",12],
+        ["player 2",10],
+        ["player 3",8],
+        ["player 4",6],
+        ["player 5",4]
+    ]
+        
 
 def getRenderObject(objectId):
     for obj in renderQueue:
@@ -152,7 +206,7 @@ reset()
 
 while not done:
     screen.fill(colour_bg)
-
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             done = True
@@ -163,6 +217,7 @@ while not done:
                     getRenderObject("5050").visible = False
                     getRenderObject("double").visible = False
                     getRenderObject("timer").visible = False
+                    renderQueue.append(TextBox(275,225,100,50,colour_btn1,"Next",colour_btn2,font2,True,"next"))
                     if button.correct:
                         button.colour = colour_correct
                     else:
@@ -174,6 +229,8 @@ while not done:
                         done = True
                     if button.objId == "play":
                         q = 0
+                        fifty = False
+                        double = False
                         options = [
                             OptionButton(50,300,"A)",qList[q].get_answers()[0],"opt1",q),
                             OptionButton(50,375,"B)",qList[q].get_answers()[1],"opt2",q),
@@ -191,25 +248,69 @@ while not done:
                             TextBox(425,225,100,50,colour_btn1,"10",colour_btn2,font2,True,"timer")
                         ]
                         renderQueue = getRenderQueue()
+                    if button.objId == "next":
+                        if q < len(qList) - 1:
+                            q += 1
+                            fifty = False
+                            double = False
+                            answered = False
+                            options = [
+                                OptionButton(50,300,"A)",qList[q].get_answers()[0],"opt1",q),
+                                OptionButton(50,375,"B)",qList[q].get_answers()[1],"opt2",q),
+                                OptionButton(350,300,"C)",qList[q].get_answers()[2],"opt3",q),
+                                OptionButton(350,375,"D)",qList[q].get_answers()[3],"opt4",q)
+                            ]
+                            buttons = [
+                                TextBox(25,0,75,50,colour_btn1,"Quit",colour_btn2,font2,True,"quit"),
+                                TextBox(125,225,100,50,colour_btn1,"50/50",colour_btn2,font2,True,"5050"),
+                                TextBox(275,225,100,50,colour_btn1,"2x",colour_btn2,font2,True,"double")
+                            ]
+                            textBoxes = [
+                                TextBox(475,0,150,50,colour_btn1,"Score: 0",colour_btn2,font2,False,"score"),
+                                TextBox(25,75,600,125,colour_bg,qList[q].get_title(),colour_btn1,font2,False,"questionText"),
+                                TextBox(425,225,100,50,colour_btn1,"10",colour_btn2,font2,True,"timer")
+                            ]
+                            renderQueue = getRenderQueue()
+                        else:
+                            options = []
+                            buttons = [
+                                TextBox(475,400,150,50,colour_btn1,"Back",colour_btn2,font2,False,"back")
+                            ]
+                            textBoxes = [
+                                TextBox(25,25,600,350,colour_bg,"End of quiz!",colour_btn1,font2,False,"")
+                            ]
+                            renderQueue = getRenderQueue()
                     if button.objId == "help":
                         options = []
-                        buttons = []
-                        textBoxes = []
+                        buttons = [
+                            TextBox(475,400,150,50,colour_btn1,"Back",colour_btn2,font2,False,"back")
+                        ]
+                        textBoxes = [
+                            TextBox(25,25,600,350,colour_bg,"Help text goes here",colour_btn1,font2,False,"")
+                        ]
                         renderQueue = getRenderQueue()
+                    if button.objId == "back":
+                        reset()
                     if button.objId == "highscores":
                         options = []
-                        buttons = []
-                        textBoxes = []
+                        buttons = [
+                            TextBox(475,400,150,50,colour_btn1,"Back",colour_btn2,font2,False,"back")
+                        ]
+                        textBoxes = [
+                            ScoreBoard(25,25,500,100,50,5,font2,colour_bg,colour_btn1,scores,"scoreboard")
+                        ]
                         renderQueue = getRenderQueue()
                     if button.objId == "5050" and not answered:
                         button.colour = colour_correct
+                        fifty = True
                     if button.objId == "double" and not answered:
                         button.colour = colour_correct
+                        double = True
                     ###remove this###
                     if button.objId == "score":
                         reset()
                     ###///////////###
-
+    
     for button in renderQueue:
         if button.visible:
             button.render()
