@@ -1,5 +1,6 @@
 import pygame
 import questions
+import scoreboard
 
 def merge(*lists):
     merged = []
@@ -145,7 +146,7 @@ def reset():
         TextBox(405,295,150,45,colour_btn2,"High Scores",colour_btn1,font3,True,"highscores"),
         TextBox(250,365,150,45,colour_btn2,"Exit",colour_btn1,font3,True,"quit")
     ]
-    
+
     textBoxes = [
         TextBox(125,100,400,54,colour_btn1,"The Quiz of Quizicalness",colour_btn2,font1,True,"title"),
     ]
@@ -160,42 +161,16 @@ def reset():
     answered = False
 
     qi = questions.QuestionImporter()
-    
+
     global qList
-    #not working
-    #qList = qi.import_random_questions(1)
-    qList = [
-        questions.Question({'title' : "question 1?",
-            'answer' : "b", 'a1' : "incorrect",
-            'a2' : "correct", 'a3' : "incorrect",
-            'a4' : "incorrect"}),
-         questions.Question({'title' : "question 2?",
-            'answer' : "d", 'a1' : "incorrect",
-            'a2' : "incorrect", 'a3' : "incorrect",
-            'a4' : "correct"}),
-         questions.Question({'title' : "question 3?",
-            'answer' : "a", 'a1' : "correct",
-            'a2' : "incorrect", 'a3' : "incorrect",
-            'a4' : "incorrect"}),
-         questions.Question({'title' : "question 4?",
-            'answer' : "b", 'a1' : "incorrect",
-            'a2' : "correct", 'a3' : "incorrect",
-            'a4' : "incorrect"}),
-         questions.Question({'title' : "question 5?",
-            'answer' : "c", 'a1' : "incorrect",
-            'a2' : "incorrect", 'a3' : "correct",
-            'a4' : "incorrect"})
-    ]
+    qList = qi.import_random_questions(15)
 
     global scores
-    scores = [
-        ["player 1",12],
-        ["player 2",10],
-        ["player 3",8],
-        ["player 4",6],
-        ["player 5",4]
-    ]
-        
+    global board
+    board = scoreboard.ScoreBoard()
+    board.loadScoreBoard()
+    scores = board.getTopTen(5)
+
 
 def getRenderObject(objectId):
     for obj in renderQueue:
@@ -206,7 +181,7 @@ reset()
 
 while not done:
     screen.fill(colour_bg)
-    
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             done = True
@@ -310,7 +285,7 @@ while not done:
                     if button.objId == "score":
                         reset()
                     ###///////////###
-    
+
     for button in renderQueue:
         if button.visible:
             button.render()
