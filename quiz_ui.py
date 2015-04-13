@@ -264,7 +264,7 @@ while not done:
                             TextBox(475,400,150,50,colour_btn1,"Back",colour_btn2,font2,False,"back")
                         ]
                         textBoxes = [
-                            TextBox(25,25,600,350,colour_bg,"Help text goes here",colour_btn1,font2,False,"")
+                            TextBox(25,25,600,350,colour_bg,helptext,colour_btn1,font2,False,"")
                         ]
                         renderQueue = getRenderQueue()
                     if button.objId == "back":
