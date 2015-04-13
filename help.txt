@@ -1,2 +1,9 @@
-some text
-some more
+Answer - To answer a question left click on your choice 
+Next - Left click the next button to go to the next question
+Correct Answer - Answering correctly earns you 10 points
+Incorrect Answer - Answering incorrectly earns you 0 points
+Special Button - Located above answers, aid you in winning
+50/50 - Removes two incorrect answers from the screen
+50/50 Score - Earn 5 points if correct, lose 10 if wrong
+2X - Doubles your score if you answer correctly
+2X Score - Earn 20 points if correct, lose 20 if wrong
