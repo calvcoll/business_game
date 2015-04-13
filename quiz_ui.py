@@ -263,9 +263,12 @@ while not done:
                         buttons = [
                             TextBox(475,400,150,50,colour_btn1,"Back",colour_btn2,font2,False,"back")
                         ]
-                        textBoxes = [
-                            TextBox(25,25,600,350,colour_bg,helptext,colour_btn1,font2,False,"")
-                        ]
+                        textBoxes = []
+                        newY = 25
+                        add = 25
+                        for text in helptext.split('\n'):
+                            textBoxes.append(TextBox(25,newY,600,newY,colour_bg,text,colour_btn1,font2,False,""))
+                            newY += add * 1.5
                         renderQueue = getRenderQueue()
                     if button.objId == "back":
                         reset()
