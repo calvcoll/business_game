@@ -101,12 +101,11 @@ def getRenderQueue():
     for obj in options:
         rq.append(obj)
 
-    for obj in buttons:
-        rq.append(obj)
-
     for obj in textBoxes:
         rq.append(obj)
 
+    for obj in buttons:
+        rq.append(obj)
     return rq
 
 def reset():
@@ -118,6 +117,8 @@ def reset():
     font2= pygame.font.SysFont("arial", 24)
     global font3
     font3 = pygame.font.SysFont("arial", 24, True)
+    global font4
+    font4 = pygame.font.SysFont("arial", 16)
     global colour_btn1
     colour_btn1 = (255,255,255)
     global colour_btn2
@@ -267,7 +268,7 @@ while not done:
                         newY = 25
                         add = 25
                         for text in helptext.split('\n'):
-                            textBoxes.append(TextBox(25,newY,600,newY,colour_bg,text,colour_btn1,font2,False,""))
+                            textBoxes.append(TextBox(25,newY,600,newY,colour_bg,text,colour_btn1,font4,False,""))
                             newY += add * 1.5
                         renderQueue = getRenderQueue()
                     if button.objId == "back":

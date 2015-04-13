@@ -17,7 +17,7 @@ class ScoreBoard:
         scoreBoard_file = open("scoreboard.txt", "r")
 
         for players in scoreBoard_file:
-            players = players.rstrip("\n")
+            players = players.rstrip()
             players = players.split("|")
             self.scoreBoard.append(players)
 
