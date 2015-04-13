@@ -160,6 +160,9 @@ def reset():
     global answered
     answered = False
 
+    global helptext
+    helptext = open('help.txt','r').read()
+
     qi = questions.QuestionImporter()
 
     global qList
