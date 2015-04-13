@@ -24,10 +24,11 @@ class QuestionImporter:
     reader = csv.reader(open(file), delimiter='|')
     questions = []
     for question in reader:
-      questions.append(Question({'title' : question[0],
-                'answer' : question[1], 'a1' : question[2],
-                'a2' : question[3], 'a3' : question[4],
-                'a4' : question[5]}))
+        if not '#' in question[0]:
+          questions.append(Question({'title' : question[0],
+                    'answer' : question[1], 'a1' : question[2],
+                    'a2' : question[3], 'a3' : question[4],
+                    'a4' : question[5]}))
     return questions
 
   def new_seed(self):
