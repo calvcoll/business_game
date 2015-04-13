@@ -9,17 +9,19 @@ class ScoreBoard:
     def getTopTen(self, number=10):
         if number > len(self.scoreBoard):
           number = len(self.scoreBoard)
-        sorted(self.scoreBoard, key = lambda x: int(x[1]))
+        self.scoreBoard = sorted(self.scoreBoard, key = lambda x: int(x[1]), reverse=True)
+        print(self.scoreBoard)
         return self.scoreBoard[0:number]
 
     def loadScoreBoard(self):
 
         scoreBoard_file = open("scoreboard.txt", "r")
 
-        for players in scoreBoard_file:
-            players = players.rstrip()
-            players = players.split("|")
-            self.scoreBoard.append(players)
+        for player in scoreBoard_file.readlines():
+            player = player.rstrip()
+            player = player.split("|")
+            print(player)
+            self.scoreBoard.append(player)
 
         scoreBoard_file.close()
 
