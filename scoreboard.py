@@ -10,7 +10,7 @@ class ScoreBoard:
         if number > len(self.scoreBoard):
           number = len(self.scoreBoard)
         self.scoreBoard = sorted(self.scoreBoard, key = lambda x: int(x[1]), reverse=True)
-        print(self.scoreBoard)
+        #print(self.scoreBoard)
         return self.scoreBoard[0:number]
 
     def loadScoreBoard(self):
@@ -20,7 +20,7 @@ class ScoreBoard:
         for player in scoreBoard_file.readlines():
             player = player.rstrip()
             player = player.split("|")
-            print(player)
+            #print(player)
             self.scoreBoard.append(player)
 
         scoreBoard_file.close()
