@@ -9,3 +9,6 @@ class Timer:
     if (self.time_to_wait - int(round(time.time()))> 0):
       return False
     return True
+
+  def getTime(self):
+    return self.time_to_wait - int(round(time.time()))
