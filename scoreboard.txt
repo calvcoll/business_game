@@ -1,6 +1,8 @@
+Calv|90
 Dave|18
 Martin|16
 Ali|14
 Clary|12
 Calv|10
-Marcus|20
+Marcus|10
+John|25

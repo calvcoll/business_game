@@ -305,6 +305,7 @@ while not done:
                             pygame.display.update()
                             name = raw_input("Enter your name: ")
                             board.addHighScore(name,score)
+                            pygame.event.set_grab(True)
                     if button.objId == "help":
                         options = []
                         buttons = [

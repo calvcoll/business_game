@@ -10,7 +10,6 @@ class ScoreBoard:
         if number > len(self.scoreBoard):
           number = len(self.scoreBoard)
         self.scoreBoard = sorted(self.scoreBoard, key = lambda x: int(x[1]), reverse=True)
-        #print(self.scoreBoard)
         return self.scoreBoard[0:number]
 
     def loadScoreBoard(self):
@@ -37,14 +36,7 @@ class ScoreBoard:
         scoreBoard_file.close()
 
     def addHighScore(self,playerName,playerScore):
-
         self.player = [playerName,str(playerScore)]
-        self.highScoreAdded = False
-
-        for x in range (5):
-
-            if (playerScore >= int(self.scoreBoard[x][1]) and (self.highScoreAdded == False)):
-
-                self.scoreBoard[x] = self.player
-                self.saveScoreBoard()
-                self.highScoreAdded = True
+        self.scoreBoard.append(self.player)
+        self.saveScoreBoard()
+        self.highScoreAdded = True
