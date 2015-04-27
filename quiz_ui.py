@@ -135,8 +135,12 @@ def reset():
     colour_incorrect = (255,0,0)
 
     global screen
+
+    global game_name_caption
+    game_name_caption = "The Quiz of Quizzicalness"
+
     screen = pygame.display.set_mode([650,450])
-    pygame.display.set_caption("game")
+    pygame.display.set_caption(game_name_caption)
 
     global options
     global buttons
@@ -151,7 +155,7 @@ def reset():
     ]
 
     textBoxes = [
-        TextBox(125,100,400,54,colour_btn1,"The Quiz of Quizzicalness",colour_btn2,font1,True,"title"),
+        TextBox(125,100,400,54,colour_btn1,game_name_caption,colour_btn2,font1,True,"title"),
     ]
 
     global renderQueue
